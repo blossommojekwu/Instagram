@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.instagram.databinding.ActivityMainBinding;
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.PostsFragment;
+import com.example.instagram.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.actionCompose:fragment = new ComposeFragment();
                         break;
                     case R.id.actionProfile:
-                    default:fragment = new ComposeFragment();
+                    default:fragment = new ProfileFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
