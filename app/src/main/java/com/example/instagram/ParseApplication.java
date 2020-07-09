@@ -1,6 +1,7 @@
 package com.example.instagram;
 
 import android.app.Application;
+import android.os.Parcel;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
