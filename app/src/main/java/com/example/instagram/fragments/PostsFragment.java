@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
@@ -32,6 +34,9 @@ public class PostsFragment extends Fragment {
 
     public static final String TAG = "PostsFragment";
     public static final int QUERY_LIMIT = 20;
+
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
     private SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     protected PostsAdapter mAdapter;
@@ -52,6 +57,10 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvPosts);
+        // 0. Create layout for one row in the list
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        // 1. create the adapter
+        // 2. create the data source
         allPosts = new ArrayList<>();
         mAdapter = new PostsAdapter(getContext(), allPosts);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -67,15 +76,19 @@ public class PostsFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
-        //Steps to use the recyclerview:
-        // 0. Create layout for one row in the list
-        // 1. create the adapter
-        // 2. create the data source
-        // 3. set the adapter on the recyclerview
         rvPosts.setAdapter(mAdapter);
         // 4. set the layout manager on the recycler view
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvPosts.setLayoutManager(linearLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                queryPosts();
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvPosts.addOnScrollListener(scrollListener);
         queryPosts();
     }
 

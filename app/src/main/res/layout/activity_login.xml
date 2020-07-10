@@ -5,18 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <ImageView
+        android:id="@+id/ivInstagram"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/instagram_name" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="298dp"
+        android:layout_height="52dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="50dp"
+        app:backgroundTint="@null"
         android:background="@drawable/button_login"
         android:fontFamily="sans-serif-black"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
@@ -42,15 +54,5 @@
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/etUsername"
         app:layout_constraintTop_toBottomOf="@+id/etUsername" />
-
-    <ImageView
-        android:id="@+id/ivInstagram"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/instagram_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

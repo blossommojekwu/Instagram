@@ -10,7 +10,6 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         //Register parse models
         ParseObject.registerSubclass(Post.class);
 
