@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,20 +10,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.instagram.R;
+import com.example.instagram.feed.MainActivity;
 import com.example.instagram.databinding.ActivityLoginBinding;
-import com.example.instagram.fragments.SignupFragment;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
-    private EditText etUsername;
-    private EditText etPassword;
-    private Button btnLogin;
-    private Button btnSignUp;
+    private EditText mEtUsername;
+    private EditText mEtPassword;
+    private Button mBtnLogin;
+    private Button mBtnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +37,20 @@ public class LoginActivity extends AppCompatActivity {
             getMainActivity();
         }
 
-        etUsername = loginBinding.etUsername;
-        etPassword = loginBinding.etPassword;
-        btnLogin = loginBinding.btnLogin;
-        btnSignUp = loginBinding.btnSignUp;
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        mEtUsername = loginBinding.etUsername;
+        mEtPassword = loginBinding.etPassword;
+        mBtnLogin = loginBinding.btnLogin;
+        mBtnSignUp = loginBinding.btnSignUp;
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Clicked Login Button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
+                String username = mEtUsername.getText().toString();
+                String password = mEtPassword.getText().toString();
                 loginUser(username, password);
             }
         });
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "Clicked SignUp Button");
@@ -74,11 +74,11 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with Login", e);
-                    Toast.makeText(LoginActivity.this, "Incorrect Login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.incorrect_login, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 getMainActivity();
-                Toast.makeText(LoginActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.welcome, Toast.LENGTH_SHORT).show();
             }
         });
     }

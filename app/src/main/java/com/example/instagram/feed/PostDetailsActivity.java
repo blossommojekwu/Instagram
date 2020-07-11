@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.feed;
 
 import android.os.Bundle;
 import android.text.format.DateUtils;

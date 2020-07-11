@@ -36,6 +36,4 @@ public class User extends ParseObject {
     public void setProfilePicture(ParseFile parseFile){
         put(KEY_PROFILE_PICTURE, parseFile);
     }
-
-
 }

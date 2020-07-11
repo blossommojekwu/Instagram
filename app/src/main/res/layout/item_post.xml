@@ -56,13 +56,13 @@
             android:id="@+id/btnComment"
             android:layout_width="@dimen/interactiveIcons"
             android:layout_height="@dimen/interactiveIcons"
-            android:layout_marginRight="270dp"
-            android:background="@drawable/ic_comment" />
+            android:background="@drawable/ic_comment"
+            android:layout_marginRight="290dp"/>
 
         <Button
             android:layout_width="@dimen/interactiveIcons"
             android:layout_height="@dimen/interactiveIcons"
-            android:background="@drawable/ic_bookmark" />
+            android:background="@drawable/ic_bookmark"/>
     </LinearLayout>
 
     <TextView

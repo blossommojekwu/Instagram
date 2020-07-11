@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,18 +6,16 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.instagram.feed.PostDetailsActivity;
+import com.example.instagram.R;
 import com.example.instagram.models.Post;
 import com.parse.ParseFile;
 
@@ -28,43 +26,37 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    Context context;
-    List<Post> posts;
+    Context mContext;
+    List<Post> mPosts;
 
     public PostsAdapter(Context context, List<Post> posts){
-        this.context = context;
-        this.posts = posts;
+        this.mContext = context;
+        this.mPosts = posts;
     }
     
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Post post = posts.get(position);
+        Post post = mPosts.get(position);
         //take viewholder passed in and pass data of the post into that viewholder
         holder.bind(post);
 
     }
     // Clean all elements of the recycler
     public void clear() {
-        posts.clear();
-        notifyDataSetChanged();
-    }
-
-    // Add a list of posts
-    public void addAll(List<Post> list) {
-        posts.addAll(list);
+        mPosts.clear();
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return mPosts.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -94,14 +86,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             //position must be valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION){
                 //get post at position
-                Toast.makeText(context, "Clicked on Post: " + position, Toast.LENGTH_SHORT).show();
-                Post post = posts.get(position);
+                Post post = mPosts.get(position);
                 //create intent for new activity
-                Intent intent = new Intent(context, PostDetailsActivity.class);
+                Intent intent = new Intent(mContext, PostDetailsActivity.class);
                 //serialize tweet using parceler w/ short name as key
                 intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
                 //show the activity
-                context.startActivity((intent));
+                mContext.startActivity((intent));
             }
         }
 
@@ -114,8 +105,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvTimeStamp.setText(timeAgo);
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(image.getUrl()).into(ivImage);
-                Glide.with(context).load(post.getUser().getParseFile("profilePicture")).transform(new CircleCrop()).into(ivProfileIcon);
+                Glide.with(mContext).load(image.getUrl()).into(ivImage);
+                Glide.with(mContext).load(post.getUser().getParseFile("profilePicture")).transform(new CircleCrop()).into(ivProfileIcon);
             }
         }
     }

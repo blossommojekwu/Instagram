@@ -6,6 +6,6 @@
     <dimen name="toolIcon">20dp</dimen>
     <dimen name="toolIconMargin">50dp</dimen>
     <dimen name="profileIcon">40dp</dimen>
-    <dimen name="interactiveIcons">30dp</dimen>
+    <dimen name="interactiveIcons">25dp</dimen>
     <dimen name="signupMargin">20dp</dimen>
 </resources>

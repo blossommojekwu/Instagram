@@ -1,4 +1,4 @@
-package com.example.instagram.fragments;
+package com.example.instagram.feed;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,55 +42,51 @@ public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 99;
-    private EditText etDescription;
-    private Button btnTakePic;
-    private ImageView ivPostImage;
-    private Button btnSubmit;
-    private File photoFile;
-    private String photoFileName = "photo.jpg";
+    private EditText mEtDescription;
+    private Button mBtnTakePic;
+    private ImageView mIvPostImage;
+    private Button mBtnSubmit;
+    private File mPhotoFile;
+    private String mPhotoFileName = "photo.jpg";
 
     public ComposeFragment() {
         //required empty public constructor
     }
 
-    // The onCreateView method is called when Fragment should create its View object hierarchy,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_compose, container, false);
     }
-    // This event is triggered soon after onCreateView().
-    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        etDescription = view.findViewById(R.id.etDescription);
-        btnTakePic = view.findViewById(R.id.btnTakePic);
-        ivPostImage = view.findViewById(R.id.ivPostImage);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
+        mEtDescription = view.findViewById(R.id.etDescription);
+        mBtnTakePic = view.findViewById(R.id.btnTakePic);
+        mIvPostImage = view.findViewById(R.id.ivPostImage);
+        mBtnSubmit = view.findViewById(R.id.btnSubmit);
 
-
-        btnTakePic.setOnClickListener(new View.OnClickListener() {
+        mBtnTakePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
             }
         });
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        mBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String description = etDescription.getText().toString();
+                String description = mEtDescription.getText().toString();
                 if (description.isEmpty()){
-                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.description_empty, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (photoFile == null || ivPostImage.getDrawable() == null){
-                    Toast.makeText(getContext(), "There is not image!", Toast.LENGTH_SHORT).show();
+                if (mPhotoFile == null || mIvPostImage.getDrawable() == null){
+                    Toast.makeText(getContext(), R.string.image_empty, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+                savePost(description, currentUser, mPhotoFile);
             }
         });
     }
@@ -99,16 +95,11 @@ public class ComposeFragment extends Fragment {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference for future access
-        photoFile = getPhotoFileUri(photoFileName);
+        mPhotoFile = getPhotoFileUri(mPhotoFileName);
 
-        // wrap File object into a content provider
-        // required for API >= 24
-        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", mPhotoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
-        // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
-        // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -121,27 +112,22 @@ public class ComposeFragment extends Fragment {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                Bitmap takenImage = BitmapFactory.decodeFile(mPhotoFile.getAbsolutePath());
                 // Load the taken image into a preview
-                ivPostImage.setImageBitmap(takenImage);
+                mIvPostImage.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.picture_not_taken, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName) {
-        // Get safe storage directory for photos
-        // Use `getExternalFilesDir` on Context to access package-specific directories.
-        // This way, we don't need to request external read/write runtime permissions.
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
-        // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
             Log.d(TAG, "failed to create directory");
         }
-
         // Return the file target for the photo based on filename
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
@@ -156,12 +142,12 @@ public class ComposeFragment extends Fragment {
             public void done(ParseException e) {
                 if (e != null){
                     Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.saving_error, Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was successful!");
                 //clear out previous data
-                etDescription.setText("");
-                ivPostImage.setImageResource(0);
+                mEtDescription.setText("");
+                mIvPostImage.setImageResource(0);
             }
         });
     }

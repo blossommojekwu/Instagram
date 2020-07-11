@@ -1,4 +1,4 @@
-package com.example.instagram.fragments;
+package com.example.instagram.feed;
 
 import android.os.Bundle;
 
@@ -14,9 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
-import com.example.instagram.PostsAdapter;
+import com.example.instagram.login.PostsAdapter;
 import com.example.instagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -34,11 +33,11 @@ public class PostsFragment extends Fragment {
     public static final String TAG = "PostsFragment";
     public static final int QUERY_LIMIT = 20;
 
-    private EndlessRecyclerViewScrollListener scrollListener;
-    private SwipeRefreshLayout swipeContainer;
-    private RecyclerView rvPosts;
+    private EndlessRecyclerViewScrollListener mScrollListener;
+    private SwipeRefreshLayout mSwipeContainer;
+    private RecyclerView mRvPosts;
     protected PostsAdapter mAdapter;
-    protected List<Post> allPosts;
+    protected List<Post> mAllPosts;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -47,46 +46,44 @@ public class PostsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_posts, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        rvPosts = view.findViewById(R.id.rvPosts);
+        mRvPosts = view.findViewById(R.id.rvPosts);
         // 0. Create layout for one row in the list
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         // 1. create the adapter
         // 2. create the data source
-        allPosts = new ArrayList<>();
-        mAdapter = new PostsAdapter(getContext(), allPosts);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        mAllPosts = new ArrayList<>();
+        mAdapter = new PostsAdapter(getContext(), mAllPosts);
+        mSwipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 fetchFeed(0);
             }
         });
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        mSwipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        rvPosts.setAdapter(mAdapter);
+        mRvPosts.setAdapter(mAdapter);
         // 4. set the layout manager on the recycler view
-        rvPosts.setLayoutManager(linearLayoutManager);
-        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+        mRvPosts.setLayoutManager(linearLayoutManager);
+        mScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
                 queryPosts();
             }
         };
         // Adds the scroll listener to RecyclerView
-        rvPosts.addOnScrollListener(scrollListener);
+        mRvPosts.addOnScrollListener(mScrollListener);
         queryPosts();
     }
 
@@ -96,7 +93,7 @@ public class PostsFragment extends Fragment {
         // ...the data has come back, add new items to your adapter...
         queryPosts();
         // Now we call setRefreshing(false) to signal refresh has finished
-        swipeContainer.setRefreshing(false);
+        mSwipeContainer.setRefreshing(false);
     }
 
     protected void queryPosts() {
@@ -116,7 +113,7 @@ public class PostsFragment extends Fragment {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
                 //update datasource and notice adapter that we got new data
-                allPosts.addAll(posts);
+                mAllPosts.addAll(posts);
                 mAdapter.notifyDataSetChanged();
             }
         });
