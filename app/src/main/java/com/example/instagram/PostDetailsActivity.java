@@ -1,6 +1,5 @@
 package com.example.instagram;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -13,9 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterInside;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.instagram.databinding.ActivityDetailsBinding;
+import com.example.instagram.models.Post;
 import com.parse.ParseFile;
 
 import org.parceler.Parcels;
@@ -33,7 +31,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "Now on Details Page", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Post Details", Toast.LENGTH_SHORT).show();
         ActivityDetailsBinding detailsBinding = ActivityDetailsBinding.inflate(getLayoutInflater());
 
         //layout of activity is stored in a special property called root

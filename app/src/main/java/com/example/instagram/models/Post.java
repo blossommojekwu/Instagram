@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.models;
 
 import android.text.format.DateUtils;
 import android.util.Log;

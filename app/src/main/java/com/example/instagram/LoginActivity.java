@@ -9,8 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.instagram.databinding.ActivityLoginBinding;
+import com.example.instagram.fragments.SignupFragment;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -20,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = loginBinding.etUsername;
         etPassword = loginBinding.etPassword;
         btnLogin = loginBinding.btnLogin;
+        btnSignUp = loginBinding.btnSignUp;
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +50,20 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "Clicked SignUp Button");
+                showDialogFragment();
+            }
+        });
+    }
 
+    //show signup dialog to create account
+    private void showDialogFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SignupFragment signupFragment = SignupFragment.newInstance("Some Title");
+        signupFragment.show(fragmentManager, "fragment_signup");
     }
 
     private void loginUser(String username, String password) {

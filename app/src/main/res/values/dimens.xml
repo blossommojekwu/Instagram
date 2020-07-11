@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="cornerRadius">3</integer>
+    <integer name="imgRadius">10</integer>
     <integer name="padding">5</integer>
+    <dimen name="toolIcon">20dp</dimen>
+    <dimen name="toolIconMargin">50dp</dimen>
+    <dimen name="profileIcon">40dp</dimen>
+    <dimen name="interactiveIcons">30dp</dimen>
+    <dimen name="signupMargin">20dp</dimen>
 </resources>

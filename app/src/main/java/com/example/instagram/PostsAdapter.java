@@ -2,10 +2,11 @@ package com.example.instagram;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,11 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.instagram.models.Post;
 import com.parse.ParseFile;
 
 import org.parceler.Parcels;
 
+import java.util.Date;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
@@ -68,6 +72,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         TextView tvUsername;
         ImageView ivImage;
         TextView tvDescription;
+        ImageView ivProfileIcon;
+        TextView tvTimeStamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +81,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvUsername = itemView.findViewById(R.id.tvUsername);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            ivProfileIcon = itemView.findViewById(R.id.ivProfileIcon);
+            tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
             itemView.setOnClickListener(this);
         }
 
@@ -99,11 +107,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         public void bind(Post post) {
             //Bind the post data to the view elements
-            tvDescription.setText(post.getDescription());
             tvUsername.setText((post.getUser().getUsername()));
+            tvDescription.setText(post.getDescription());
+            Date absoluteCreatedAt = post.getCreatedAt();
+            String timeAgo =  String.valueOf(DateUtils.getRelativeTimeSpanString(absoluteCreatedAt.getTime(), System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_TIME));
+            tvTimeStamp.setText(timeAgo);
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
+                Glide.with(context).load(image.getUrl()).into(ivImage);
+                Glide.with(context).load(post.getUser().getParseFile("profilePicture")).transform(new CircleCrop()).into(ivProfileIcon);
             }
         }
     }

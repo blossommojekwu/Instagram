@@ -13,10 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.instagram.EndlessRecyclerViewScrollListener;
-import com.example.instagram.Post;
+import com.example.instagram.models.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
 import com.parse.FindCallback;
@@ -35,7 +34,6 @@ public class PostsFragment extends Fragment {
     public static final String TAG = "PostsFragment";
     public static final int QUERY_LIMIT = 20;
 
-    // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
     private SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
@@ -123,5 +121,4 @@ public class PostsFragment extends Fragment {
             }
         });
     }
-
 }

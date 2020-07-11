@@ -4,17 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="20dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvUsername"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:text="blossom"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivProfileIcon"
+            android:layout_width="@dimen/profileIcon"
+            android:layout_height="@dimen/profileIcon"
+            tools:srcCompat="@tools:sample/avatars"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:fontFamily="sans-serif-black"
+            android:text="blossom"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/ivImage"
@@ -24,10 +40,45 @@
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <LinearLayout
+        android:id="@+id/interactiveLayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnFavorite"
+            android:layout_width="@dimen/interactiveIcons"
+            android:layout_height="@dimen/interactiveIcons"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/ic_favorite" />
+
+        <Button
+            android:id="@+id/btnComment"
+            android:layout_width="@dimen/interactiveIcons"
+            android:layout_height="@dimen/interactiveIcons"
+            android:layout_marginRight="270dp"
+            android:background="@drawable/ic_comment" />
+
+        <Button
+            android:layout_width="@dimen/interactiveIcons"
+            android:layout_height="@dimen/interactiveIcons"
+            android:background="@drawable/ic_bookmark" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Day in the life" />
+        android:fontFamily="sans-serif"
+        android:text="Day in the life"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorBlack"
+        android:layout_marginBottom="8dp"/>
+    <TextView
+        android:id="@+id/tvTimeStamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4 hours ago"
+        android:textSize="16sp"/>
 
 </LinearLayout>

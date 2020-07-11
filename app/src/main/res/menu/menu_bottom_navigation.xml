@@ -7,15 +7,18 @@
         android:id="@+id/actionHome"
         android:icon="@drawable/ic_home_black"
         android:title="Home"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorBlack"/>
     <item
         android:id="@+id/actionCompose"
         android:icon="@drawable/ic_add_post"
         android:title="Compose"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorBlack"/>
     <item
         android:id="@+id/actionProfile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorBlack"/>
 </menu>
