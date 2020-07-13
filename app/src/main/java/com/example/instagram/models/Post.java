@@ -1,20 +1,11 @@
 package com.example.instagram.models;
 
-import android.text.format.DateUtils;
-import android.util.Log;
-
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
-import java.util.Locale;
 
 @Parcel(Parcel.Serialization.BEAN)
 @ParseClassName("POST")

@@ -9,7 +9,6 @@ public class User extends ParseObject {
 
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "image";
-    public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_PROFILE_PICTURE = "profilePicture";
 
 

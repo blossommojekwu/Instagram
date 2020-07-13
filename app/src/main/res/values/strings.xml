@@ -16,4 +16,5 @@
     <string name="signup_error">Error while signing up</string>
     <string name="welcome_instagram">Welcome to Instagram!</string>
     <string name="login_new_user">Login New User</string>
+    <string name="signup">Sign Up!</string>
 </resources>

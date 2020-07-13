@@ -79,7 +79,8 @@ public class PostsFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
-                queryPosts();
+                //queryPosts();
+                fetchFeed(0);
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -112,7 +113,7 @@ public class PostsFragment extends Fragment {
                 for (Post post : posts){
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
-                //update datasource and notice adapter that we got new data
+                //update data source and notify adapter that we got new data
                 mAllPosts.addAll(posts);
                 mAdapter.notifyDataSetChanged();
             }

@@ -26,8 +26,8 @@ import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
-    Context mContext;
-    List<Post> mPosts;
+    private Context mContext;
+    private List<Post> mPosts;
 
     public PostsAdapter(Context context, List<Post> posts){
         this.mContext = context;
@@ -103,10 +103,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Date absoluteCreatedAt = post.getCreatedAt();
             String timeAgo =  String.valueOf(DateUtils.getRelativeTimeSpanString(absoluteCreatedAt.getTime(), System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_TIME));
             tvTimeStamp.setText(timeAgo);
+            ParseFile profilePic = post.getUser().getParseFile("profilePicture");
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(mContext).load(image.getUrl()).into(ivImage);
-                Glide.with(mContext).load(post.getUser().getParseFile("profilePicture")).transform(new CircleCrop()).into(ivProfileIcon);
+                Glide.with(mContext).load(profilePic.getUrl()).transform(new CircleCrop()).into(ivProfileIcon);
             }
         }
     }

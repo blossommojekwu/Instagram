@@ -35,9 +35,6 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * create an instance of this fragment.
- */
 public class ComposeFragment extends Fragment {
 
     public static final String TAG = "ComposeFragment";

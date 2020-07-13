@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:fontFamily="sans-serif-black"
-        android:text="Sign Up!"
+        android:text="@string/signup"
         android:textColor="@color/colorBlack"
         android:textSize="36sp" />
 
@@ -49,7 +49,7 @@
     <ImageView
         android:id="@+id/ivProfilePic"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/image200"
         android:layout_marginBottom="@dimen/signupMargin" />
 
     <Button

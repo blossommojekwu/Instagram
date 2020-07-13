@@ -4,8 +4,11 @@
     <integer name="imgRadius">10</integer>
     <integer name="padding">5</integer>
     <dimen name="toolIcon">20dp</dimen>
-    <dimen name="toolIconMargin">50dp</dimen>
+    <dimen name="toolIconMargin">40dp</dimen>
     <dimen name="profileIcon">40dp</dimen>
     <dimen name="interactiveIcons">25dp</dimen>
     <dimen name="signupMargin">20dp</dimen>
+    <dimen name="image300">300dp</dimen>
+    <dimen name="loginHeight">50dp</dimen>
+    <dimen name="image200">200dp</dimen>
 </resources>

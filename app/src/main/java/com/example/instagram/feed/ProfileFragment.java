@@ -30,7 +30,7 @@ public class ProfileFragment extends PostsFragment {
                 for (Post post : posts) {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
-                //update datasource and notify adapter that we get new data
+                //update data source and notify adapter that we get new data
                 mAllPosts.addAll(posts);
                 mAdapter.notifyDataSetChanged();
             }

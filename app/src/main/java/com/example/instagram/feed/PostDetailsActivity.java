@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.instagram.databinding.ActivityDetailsBinding;
 import com.example.instagram.models.Post;
 import com.parse.ParseFile;
@@ -43,6 +44,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         ImageView ivDetailsImage = detailsBinding.ivDetailsImage;
         TextView tvDetailsDescription = detailsBinding.tvDetailsDescription;
         TextView tvDetailsTimeStamp = detailsBinding.tvDetailsTimeStamp;
+        ImageView ivDetailsProfileIcon = detailsBinding.ivDetailsProfileIcon;
 
         //unwrap the tweet passed in via intent using its simple name key
         post = (Post) Parcels.unwrap(getIntent().getParcelableExtra(Post.class.getSimpleName()));
@@ -55,8 +57,10 @@ public class PostDetailsActivity extends AppCompatActivity {
         String timeAgo =  String.valueOf(DateUtils.getRelativeTimeSpanString(absoluteCreatedAt.getTime(), System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_TIME));
         tvDetailsTimeStamp.setText(timeAgo);
         ParseFile image = post.getImage();
+        ParseFile detailsProfilePic = post.getUser().getParseFile("profilePicture");
         if (image != null) {
             Glide.with(this).load(post.getImage().getUrl()).into(ivDetailsImage);
+            Glide.with(this).load(detailsProfilePic.getUrl()).transform(new CircleCrop()).into(ivDetailsProfileIcon);
         }
     }
 }

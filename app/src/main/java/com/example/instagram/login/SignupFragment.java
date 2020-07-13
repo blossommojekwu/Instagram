@@ -22,9 +22,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.instagram.R;
-import com.example.instagram.models.User;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -97,7 +95,7 @@ public class SignupFragment extends DialogFragment {
                 photo.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        //if successful adds photo file to user and signUpInbackground
+                        //if successful adds photo file to Parse User and signUpInbackground
                         if (e == null){
                             saveUser(username, password, photo);
                             ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -167,7 +165,7 @@ public class SignupFragment extends DialogFragment {
             }
         }
     }
-    // Returns the File for a photo stored on disk given the fileName
+
     public File getPhotoFileUri(String fileName) {
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 

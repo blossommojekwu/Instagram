@@ -20,9 +20,11 @@ import android.widget.Toast;
 import com.example.instagram.R;
 import com.example.instagram.databinding.ActivityMainBinding;
 import com.example.instagram.login.LoginActivity;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
 
@@ -32,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView mBottomNavigationView;
-    private MaterialToolbar mInstagramToolBar;
     private Button mBtnProfilePic;
     private Button mBtnLogOut;
     private File mProfilePhotoFile;
@@ -46,12 +47,22 @@ public class MainActivity extends AppCompatActivity {
         View mainView = mainBinding.getRoot();
         setContentView(mainView);
 
-        mInstagramToolBar = mainBinding.instagramToolBar;
         mBtnProfilePic = mainBinding.btnProfilePic;
         mBtnProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
+                final ParseFile newProfilePhoto = new ParseFile(mProfilePhotoFile);
+                newProfilePhoto.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null){
+                            //update current user's profile picture
+                            ParseUser.getCurrentUser().put("profilePicture", newProfilePhoto);
+                            ParseUser.getCurrentUser().saveInBackground();
+                        }
+                    }
+                });
             }
         });
         mBtnLogOut = mainBinding.btnLogOut;
@@ -59,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }

@@ -12,6 +12,7 @@
         android:id="@+id/etDescription"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="Description..."
@@ -22,8 +23,9 @@
 
     <Button
         android:id="@+id/btnTakePic"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="72dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="Take Picture"
         tools:layout_editor_absoluteX="158dp"
@@ -33,6 +35,7 @@
         android:id="@+id/ivPostImage"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -42,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:backgroundTint="@color/igBlue"
         android:text="@string/submit" />
 
 </LinearLayout>
