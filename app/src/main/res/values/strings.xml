@@ -13,4 +13,7 @@
     <string name="profile">ME!</string>
     <string name="incorrect_login">Incorrect Login</string>
     <string name="welcome">Welcome!</string>
+    <string name="signup_error">Error while signing up</string>
+    <string name="welcome_instagram">Welcome to Instagram!</string>
+    <string name="login_new_user">Login New User</string>
 </resources>

@@ -43,13 +43,16 @@
                     android:src="@drawable/instagram_name"/>
 
                 <Button
-                    android:id="@+id/btnChat"
-                    android:layout_width="@dimen/toolIcon"
-                    android:layout_height="@dimen/toolIcon"
+                    android:id="@+id/btnLogOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/toolIconMargin"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/toolIconMargin"
-                    android:background="@drawable/ic_chat"
-                    android:backgroundTint="@color/colorBlack"/>
+                    android:backgroundTint="@color/igRoyalBlue"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Log Out"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="10sp" />
             </LinearLayout>
         </RelativeLayout>
     </com.google.android.material.appbar.MaterialToolbar>

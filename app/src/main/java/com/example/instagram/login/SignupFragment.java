@@ -23,9 +23,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.instagram.R;
 import com.example.instagram.models.User;
+import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.io.File;
 
@@ -79,8 +83,8 @@ public class SignupFragment extends DialogFragment {
         mBtnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = mEtSignupUsername.getText().toString();
-                String password = mEtSignupPassword.getText().toString();
+                final String username = mEtSignupUsername.getText().toString();
+                final String password = mEtSignupPassword.getText().toString();
                 if (username.isEmpty() || password.isEmpty()){
                     Toast.makeText(getContext(), "Username and/or password cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -89,33 +93,50 @@ public class SignupFragment extends DialogFragment {
                     Toast.makeText(getContext(), "You need a profile picture!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                saveUser(username, password, mProfilePicFile);
-                SignupFragment.this.dismiss();
-                //getActivity().onBackPressed();
+                final ParseFile photo = new ParseFile(mProfilePicFile);
+                photo.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        //if successful adds photo file to user and signUpInbackground
+                        if (e == null){
+                            saveUser(username, password, photo);
+                            ParseUser.logInInBackground(username, password, new LogInCallback() {
+                                @Override
+                                public void done(ParseUser user, ParseException e) {
+                                    if (user != null){
+                                        Log.i(TAG, R.string.login_new_user + ": " + username);
+                                        Toast.makeText(getContext(), R.string.login_new_user, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
     }
 
-    private void saveUser(String username, String password, File profilePicFile) {
-        User user = new User();
+    private void saveUser(String username, String password, ParseFile profilePicFile) {
+        ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
-        user.setProfilePicture(new ParseFile(profilePicFile));
-        user.saveInBackground(new SaveCallback() {
+        user.put("profilePicture", profilePicFile);
+        user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null){
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error while signing up", e);
+                    Toast.makeText(getContext(), R.string.signup_error, Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "User save was successful!");
-                Toast.makeText(getContext(), "Welcome to Instagram!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.welcome_instagram, Toast.LENGTH_SHORT).show();
                 //clear out previous data
                 mEtSignupUsername.setText("");
                 mEtSignupPassword.setText("");
                 mIvProfilePic.setImageResource(0);
             }
         });
+        Log.i(TAG, "New user: " + ParseUser.getCurrentUser());
     }
 
     private void launchCamera() {

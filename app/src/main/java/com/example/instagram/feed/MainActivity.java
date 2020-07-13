@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.example.instagram.R;
 import com.example.instagram.databinding.ActivityMainBinding;
+import com.example.instagram.login.LoginActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseUser;
 
 import java.io.File;
 
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
     private MaterialToolbar mInstagramToolBar;
     private Button mBtnProfilePic;
-    private Button mBtnChat;
+    private Button mBtnLogOut;
     private File mProfilePhotoFile;
     private String mProfilePhotoFileName = "profile_photo.jpg";
 
@@ -52,7 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 launchCamera();
             }
         });
-        mBtnChat = mainBinding.btnChat;
+        mBtnLogOut = mainBinding.btnLogOut;
+        mBtnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         mBottomNavigationView = mainBinding.bottomNavigation;
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
