@@ -67,7 +67,6 @@ public class PostsFragment extends Fragment {
                 fetchFeed(0);
             }
         });
-        // Configure the refreshing colors
         mSwipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -79,7 +78,6 @@ public class PostsFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
-                //queryPosts();
                 fetchFeed(0);
             }
         };

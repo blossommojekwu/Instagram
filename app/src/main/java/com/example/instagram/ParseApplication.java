@@ -1,10 +1,8 @@
 package com.example.instagram;
 
 import android.app.Application;
-import android.os.Parcel;
 
 import com.example.instagram.models.Post;
-import com.example.instagram.models.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -14,7 +12,6 @@ public class ParseApplication extends Application {
         super.onCreate();
         //Register parse models
         ParseObject.registerSubclass(Post.class);
-        ParseObject.registerSubclass(User.class);
 
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured
